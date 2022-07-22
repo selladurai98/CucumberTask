@@ -2,6 +2,8 @@ package com.flipcart.stepdefinition;
 
 import org.junit.runner.RunWith;
 
+import com.flipcart.resources.Commonactions;
+
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 
@@ -14,7 +16,7 @@ import cucumber.api.junit.Cucumber;
 
 
 
-public class TestRunner {
+public class TestRunner extends Commonactions {
 	
 	
     

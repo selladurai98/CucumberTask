@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/test/java/com/flipcart/objectrepository/MobilePurchasePage.java=UTF-8
+encoding//src/test/java/com/flipcart/objectrepository/TvPurchasePage.java=UTF-8
 encoding//src/test/java/com/flipcart/stepdefinition/MobilePurchaseSteps.java=UTF-8
+encoding//src/test/java/com/flipcart/stepdefinition/TvPurchase.java=UTF-8

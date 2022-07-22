@@ -1,5 +1,6 @@
 package com.flipcart.stepdefinition;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,33 +13,27 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import com.flipcart.objectrepository.MobilePurchasePage;
+import com.flipcart.resources.Commonactions;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.cucumber.datatable.DataTable;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class MobilePurchaseSteps {
+public class MobilePurchaseSteps  extends Commonactions{
 
 	static WebDriver driver;
-	
-	@Given("user launches flipkart application")
-	public void user_launches_flipkart_application() {
-		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
-		driver.get("https://www.flipkart.com/");
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
-		System.out.println("browser launched");
-
-	}
+	Commonactions c = new Commonactions();
+	MobilePurchasePage m = new MobilePurchasePage();
 	@Given("user login into flipkart")
 	public void user_login_into_flipkart() {
 		
-	
-	try	{ WebElement  ref = driver.findElement(By.xpath("//button[text()='✕']"));
-		  ref.isDisplayed();
-		  ref.click();
+	c.launch();
+	try	{m.getCloseIcon();
+		  m.getCloseIcon().isDisplayed();
+		  m.getCloseIcon().click();
 		
 	}catch (Exception e) {
 	System.out.println("method 1 - popup handled");
@@ -46,35 +41,27 @@ public class MobilePurchaseSteps {
 	}
 	@When("user search mobile")
 	public void user_search_mobile() {
-		WebElement search = driver.findElement(By.name("q"));
-    	search.sendKeys("Iphone",Keys.ENTER);
+		m.getSearch();
+    	m.getSearch().sendKeys("Iphone",Keys.ENTER);
     	driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    	WebElement iphone= driver.findElement(By.xpath("(//*[@class='_4rR01T'])[1]"));
-   	 String s = iphone.getText();
-   	 iphone.click();
+    m.getMobile();
+   	 String s = m.getMobile().getText();
+   m.getMobile().click();
 	}
 
 	@When("user choose the mobile and doing payments")
 	public void user_choose_the_mobile_and_doing_payments() {
-		String pwin= driver.getWindowHandle();
-  	  Set<String> allwin = driver.getWindowHandles();
-  	  for (String x : allwin) {
-  		if (!x.equals(pwin)) {
-  			driver.switchTo().window(x);
-  		}}
-  	
- 		 driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+		c.windowsHandling();
 	}
 
 	@Then("user receive order confirmation message")
-	public void user_receive_order_confirmation_message() {
-	   WebElement  buy = driver.findElement(By.xpath("//button[text()='BUY NOW']"));
+	public void user_receive_order_confirmation_message() throws IOException {
+	 m.getBuy();
 	
-		JavascriptExecutor js = (JavascriptExecutor)driver;
-		js.executeScript("arguments[0].scrollIntoView(true)",buy);
-	   String  str1 = buy.getText(); 
-	   buy.click();
-	   
+		c.scrollDown(m.getBuy());
+	   String  str1 = m.getBuy().getText(); 
+	   m.getBuy().click();
+	   c.screenshot();
 	  driver.quit();
 }
 	@When("user search mobile by using one dim list")
